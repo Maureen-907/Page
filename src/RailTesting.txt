@@ -1,0 +1,74 @@
+#include "JMLib.c"
+#include <GetLightSensorData.h>
+#include <SetMotor.h>
+#include <Set3CLed.h>
+#include <SetInBeep.h>
+#include <SetWaitForTime.h>
+
+volatile double Left = 0;
+volatile double Right = 0;
+volatile double Middle = 0;
+
+int main(void)
+{
+	for (;;) {
+		Left = GetLightSensorData(1);
+		
+		Middle = GetLightSensorData(2);
+		
+		Right = GetLightSensorData(3);
+		
+		if ((Left)==(1)) {
+			SetMotor(1,10);
+			
+			SetMotor(2,40);
+			
+		}
+		
+		if ((Middle)==(1)) {
+			SetMotor(1,30);
+			
+			SetMotor(2,40);
+			
+		}
+		
+		if ((Right)==(1)) {
+			SetMotor(1,40);
+			
+			SetMotor(2,10);
+			
+		}
+		
+		if (((Left)==(1))&&(((Middle)==(1))&&((Right)==(1)))) {
+			SetMotor(1,0);
+			
+			SetMotor(2,0);
+			
+			Set3CLed(1,2);
+			
+			SetInBeep(ON);
+			
+			SetWaitForTime(2);
+			
+			
+			Set3CLed(1,0);
+			
+			SetInBeep(OFF);
+			
+			SetMotor(1,40);
+			
+			SetMotor(2,40);
+			
+			SetWaitForTime(0.5);
+			
+			
+		} else {
+			SetMotor(1,-10);
+			
+			SetMotor(2,10);
+			
+		}
+		
+	}
+	
+}
